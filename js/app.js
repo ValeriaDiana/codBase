@@ -1,7 +1,5 @@
 var p = "";
-
 var c = 0;
-
 
 var calculadora = {
   iniciar: function() {
@@ -17,22 +15,17 @@ var calculadora = {
     document.getElementById("mas").onmouseup = this.regresarTamano;
   },
 
-
   disminuirTamano: function(event) {
-
     var seleccion = event.currentTarget.id;
     if (seleccion == "0" || seleccion == "1" || seleccion == "2" || seleccion == "3" || seleccion == "punto" || seleccion == "igual") {
       document.getElementById(seleccion).style = "width:28%;";
-
     }
     if (seleccion == "4" || seleccion == "5" || seleccion == "6" || seleccion == "7" || seleccion == "8" || seleccion == "9" || seleccion == "por" || seleccion == "menos" || seleccion == "sign" || seleccion == "raiz" || seleccion == "on" || seleccion == "dividido") {
       document.getElementById(seleccion).style = "width:20%;";
     }
     if (seleccion == "mas") {
       document.getElementById(seleccion).style = "width:88%;";
-
     }
-
   },
   regresarTamano: function(event) {
     var seleccion = event.currentTarget.id;
@@ -47,74 +40,61 @@ var calculadora = {
       document.getElementById(seleccion).style = "width:90%;";
     }
     calculadora.muestra(event);
-
   },
   muestra: function(event) {
+
     var seleccion = event.currentTarget.id;
-    alert(p);
+    if (seleccion == "punto") {
+      calculadora.fpunto();
+    }
+    if (seleccion == "sign") {
+      p = -p;
+      document.getElementById('display').innerHTML = p;
+    }
+    if (seleccion == "on") {
+      c=0;
+      p = "";
+      document.getElementById('display').innerHTML = "0";
+    }
+    if (seleccion == "igual") {
+      calculadora.igual(c);
+    }
+    p= p.toString();
     if (p.length < 8) {
-      if ((p == 0 && seleccion != 0) || (c > 0) || (p.length > 0)) {
-        if (seleccion == "igual") {
-          alert(c, t ,p);
-          switch (c) {
-            case 1:
-              calculadora.fsuma(t, p);
-              document.getElementById('display').innerHTML = r;
-              break;
-            case 2:
+        if ((p == 0 && seleccion != "0") || (c > 0) || (p.length > 0)) {
 
-              break;
-
-          }
-        } else {
-          alert(p);
-          if (seleccion == "0" || seleccion == "1" || seleccion == "2" || seleccion == "3" || seleccion == "4" || seleccion == "5" || seleccion == "6" || seleccion == "7" || seleccion == "8" || seleccion == "9") {
+          if (seleccion == "0" || seleccion == "1" || seleccion == "2" || seleccion == "3" || seleccion == "4" || seleccion == "5" || seleccion == "6" || seleccion == "7" || seleccion == "8" || seleccion == "9")
+          {
             p = p + seleccion;
             document.getElementById('display').innerHTML = p;
           }
-          if (seleccion == "punto") {
-            alert(p);
-            calculadora.fpunto();
-          }
-          if (seleccion == "sign") {
-            p = -p;
-            document.getElementById("display").innerHTML = p;
-          }
-          if (seleccion == "on") {
-            document.getElementById("display").innerHTML = "0";
-          }
-        }}}
-
-
-            if (seleccion == "mas") {
-              c = 1;
-              t = p;
-              p = "";
-              document.getElementById('display').innerHTML = p;
-            }
-            if (seleccion == "menos") {
-              c = 2;
-              t = p;
-              p = "";
-            }
-            if (seleccion == "multiplica") {
-              c = 3;
-              t = p;
-              p = "";
-            }
-            if (seleccion == "dividido") {
-              c = 4;
-              t = p;
-              p = "";
-            }
-
-
-
-
-
-
+      }
     }
-  ,
+      if (seleccion == "mas") {
+        c = 1;
+        t = p;
+        p = "";
+        document.getElementById('display').innerHTML = p;
+      }
+      if (seleccion == "menos") {
+        c = 2;
+        t = p;
+        p = "";
+        document.getElementById('display').innerHTML = p;
+      }
+      if (seleccion == "por") {
+        c = 3;
+        t = p;
+        p = "";
+        document.getElementById('display').innerHTML = p;
+      }
+      if (seleccion == "dividido") {
+        c = 4;
+        t = p;
+        p = "";
+        document.getElementById('display').innerHTML = p;
+    }
+  },
   fpunto: function() {
     var n = 0;
     for (var i = 0; i < p.length; i++) {
@@ -127,51 +107,65 @@ var calculadora = {
       p = p + ".";
       document.getElementById("display").innerHTML = p;
     }
-
   },
   fsuma: function(num1, num2) {
     var t = p;
-    p = "";
-
-    r = num1 + num2;
-
+    r = parseFloat(num1) + parseFloat(num2);
+    p = calculadora.verificar(r);
+    document.getElementById('display').innerHTML = p;
+    c=0;
+  },
+  fresta: function(num1, num2) {
+    var t = p;
+    r = parseFloat(num1) - parseFloat(num2);
+    p = calculadora.verificar(r);
+    document.getElementById('display').innerHTML = p;
+    c=0;
+  },
+  fmultiplicacion: function(num1, num2) {
+    var t = p;
+    r = parseFloat(num1) * parseFloat(num2);
+    p = calculadora.verificar(r);
+    document.getElementById('display').innerHTML = p;
+    c=0;
+  },
+  fdivision: function(num1, num2) {
+    var t = p;
+    r = parseFloat(num1) / parseFloat(num2);
+    p = calculadora.verificar(r);
+    document.getElementById('display').innerHTML = p;
+    c=0;
+  },
+  igual: function(c) {
+    switch (c) {
+      case 1:
+        calculadora.fsuma(t, p);
+        c=0;
+        break;
+      case 2:
+        calculadora.fresta(t, p);
+        c=0;
+        break;
+      case 3:
+        calculadora.fmultiplicacion(t, p);
+        c=0;
+        break;
+      case 4:
+        calculadora.fdivision(t, p);
+        c=0;
+        break;
+      default:
+      document.getElementById('display').innerHTML = p;
+      break;
+    }
+  },
+  verificar: function(r){
+    if(r.toString().length >= 9)
+    {
+      r = r.toString().substr(0,8)
+    }
     return r;
   }
-
-
 }
 
 calculadora.iniciar();
-
-
-
-
-/*var unary = */
-
-
-/*
-console.log(calculadora.suma());
-
-funcion inicializa(){
-  var calculadora= (function(){
-    if(arguments.length>0){
-
-    }
-    suma: function fsuma(valor1, valor2){
-     var resultado = valor1 + valor2;
-     return resultado;
-    }
-    resta: function fresta(valor1, valor2){
-     var resultado = valor1 - valor2;
-     return resultado;
-    }
-    multiplicacion: function fmultiplicacion(valor1, valor2){
-     var resultado = valor1 * valor2;
-     return resultado;
-    }
-    division: function fdivision(valor1, valor2){
-     var resultado = valor1 / valor2;
-     return resultado;
-    }
-  }
-}*/
