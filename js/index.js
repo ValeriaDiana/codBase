@@ -113,28 +113,24 @@ var calculadora = {
     r = parseFloat(num1) + parseFloat(num2);
     p = calculadora.verificar(r);
     document.getElementById('display').innerHTML = p;
-    c=0;
   },
   fresta: function(num1, num2) {
     var t = p;
     r = parseFloat(num1) - parseFloat(num2);
     p = calculadora.verificar(r);
     document.getElementById('display').innerHTML = p;
-    c=0;
   },
   fmultiplicacion: function(num1, num2) {
     var t = p;
     r = parseFloat(num1) * parseFloat(num2);
     p = calculadora.verificar(r);
     document.getElementById('display').innerHTML = p;
-    c=0;
   },
   fdivision: function(num1, num2) {
     var t = p;
     r = parseFloat(num1) / parseFloat(num2);
     p = calculadora.verificar(r);
     document.getElementById('display').innerHTML = p;
-    c=0;
   },
   igual: function(c) {
     switch (c) {
@@ -155,7 +151,7 @@ var calculadora = {
         c=0;
         break;
       default:
-      document.getElementById('display').innerHTML = p;
+        calculadora.igual(c);
       break;
     }
   },
